@@ -76,7 +76,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1664376150945,
+  "iteration": 1664377246125,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -304,7 +304,7 @@
               }
             ]
           },
-          "unit": "watt"
+          "unit": "mwatt"
         },
         "overrides": []
       },
@@ -325,7 +325,8 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
       "pluginVersion": "9.0.3",
       "targets": [
@@ -671,6 +672,6 @@
   "timezone": "",
   "title": "Energy monitoring",
   "uid": "c40p3MV4z",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
