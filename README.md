@@ -18,6 +18,19 @@ You can chec it in the tapo app -> the plug -> gear in top right -> "Device info
 docker compose up -d
 ```
 
+Add exporter to Prometheus by adding a job (IP of the docker not device) :
+
+```
+scrape_configs:
+  - job_name: 'tapo'
+    static_configs:
+    - targets: ['127.0.0.1:9333']
+      labels:
+        machine: 'home'
+```
+Import Grafa dashboard json (author did not not share his own, so I had to make my own) Energy monitoring-1664376150978.json file. 
+![Alt grafana dash](https://i.imgur.com/MXu5iQa.png)
+
 ## Exposed Metrics
 
 ```
