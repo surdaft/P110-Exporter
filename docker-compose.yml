@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  tapo-P110-exporter:
+    image: p110-exporter
+    volumes:
+       - ./tapo.yaml:/app/tapo.yaml:ro
+    ports:
+      - 9333:9333
+    environment:
+      - TAPO_EMAIL=YOUR@EMAIL.COM
+      - TAPO_PASSWORD=CHANGE_ME
+      - PORT=9333 # optional
