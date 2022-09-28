@@ -4,6 +4,20 @@ Exports energy consumption data from Tapo P110 smart devices to Prometheus, allo
 
 ![Example Grafana Dashboard](docs/grafana.png)
 
+## Startup using docker
+
+```
+git clone https://github.com/PovilasID/Tapo-P110-Prometheus-Exporter.git
+cd Tapo-P110-Prometheus-Exporter
+docker build -t p110-exporter .
+```
+Create a tapo.yaml file from tapo.example.yaml with IP of your device 
+You can chec it in the tapo app -> the plug -> gear in top right -> "Device info": IP address OR in your router Wifi router DHCP leases) tip: make a lease static
+
+```
+docker compose up -d
+```
+
 ## Exposed Metrics
 
 ```
