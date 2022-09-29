@@ -76,7 +76,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1664377246125,
+  "iteration": 1664434174061,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -138,7 +138,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "tapo_p110_today_energy_wh{}",
+          "expr": "tapo_p110_today_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -205,7 +205,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "tapo_p110_today_energy_wh{}/1000*$eur_per_kWh",
+          "expr": "tapo_p110_today_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}/1000*$eur_per_kWh",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -270,7 +270,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "builder",
-          "expr": "tapo_p110_device_count{job=\"tapo\"}",
+          "expr": "tapo_p110_device_count{job=\"$job\", machine=\"$machine\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -335,8 +335,8 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "editorMode": "builder",
-          "expr": "tapo_p110_power_consumption_w{job=\"tapo\"}",
+          "editorMode": "code",
+          "expr": "tapo_p110_power_consumption_w{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -402,8 +402,8 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "editorMode": "builder",
-          "expr": "tapo_p110_month_energy_wh{machine=\"home\"}",
+          "editorMode": "code",
+          "expr": "tapo_p110_month_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -470,7 +470,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "tapo_p110_month_energy_wh{}/1000*$eur_per_kWh",
+          "expr": "tapo_p110_month_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}/1000*$eur_per_kWh",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -596,7 +596,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "mwatt"
         },
         "overrides": []
       },
@@ -625,8 +626,8 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "editorMode": "builder",
-          "expr": "tapo_p110_power_consumption_w",
+          "editorMode": "code",
+          "expr": "tapo_p110_power_consumption_w{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}",
           "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
@@ -661,6 +662,75 @@
             "selected": false
           }
         ]
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(tapo_p110_today_energy_wh, job)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Job",
+        "multi": false,
+        "name": "job",
+        "options": [],
+        "query": {
+          "query": "label_values(tapo_p110_today_energy_wh, job)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(tapo_p110_today_energy_wh, machine)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Machine",
+        "multi": false,
+        "name": "machine",
+        "options": [],
+        "query": {
+          "query": "label_values(tapo_p110_today_energy_wh, machine)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values(tapo_p110_today_energy_wh, room)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Rooms",
+        "multi": true,
+        "name": "rooms",
+        "options": [],
+        "query": {
+          "query": "label_values(tapo_p110_today_energy_wh, room)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -672,6 +742,6 @@
   "timezone": "",
   "title": "Energy monitoring",
   "uid": "c40p3MV4z",
-  "version": 3,
+  "version": 5,
   "weekStart": ""
 }
