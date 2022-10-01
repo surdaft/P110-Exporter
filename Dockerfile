@@ -1,6 +1,6 @@
-FROM ubuntu:22.04
+FROM python:3.10-slim-bullseye
 RUN apt-get update; apt-get -y upgrade; apt-get clean
-RUN apt install python3-pip -y
+RUN apt-get install binutils -y
 
 # Default port
 ENV PORT=9333
@@ -13,8 +13,8 @@ RUN git clone https://github.com/tking2/TapoP100.git
 WORKDIR /TapoP100
 RUN git format-patch -1 132ae9b4893584a023be69ae497560a928b1c24e
 RUN git format-patch HEAD~
-RUN git apply -p2 --unsafe-paths --ignore-space-change --ignore-whitespace --directory='/usr/local/lib/python3.10/dist-packages/PyP100' 0001-fix-Improve-parsing-of-cookie-thus-removing-trailing.patch 
-RUN git apply -p2 --unsafe-paths --ignore-space-change --ignore-whitespace --directory='/usr/local/lib/python3.10/dist-packages/PyP100' 0001-chg-Pre-emptively-move-to-using-cookies.patch
+RUN git apply -p2 --unsafe-paths --ignore-space-change --ignore-whitespace --directory='/usr/local/lib/python3.10/site-packages/PyP100' 0001-fix-Improve-parsing-of-cookie-thus-removing-trailing.patch 
+RUN git apply -p2 --unsafe-paths --ignore-space-change --ignore-whitespace --directory='/usr/local/lib/python3.10/site-packages/PyP100' 0001-chg-Pre-emptively-move-to-using-cookies.patch
 # END OF FIX
 
 COPY . /app
