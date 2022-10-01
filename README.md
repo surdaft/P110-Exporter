@@ -2,23 +2,39 @@
 
 Exports energy consumption data from Tapo P110 smart devices to Prometheus, allowing monitoring and visualisation in Grafana.
 
-![Example Grafana Dashboard](docs/grafana.png)
+![Example Grafana Dashboard](https://i.imgur.com/DxLQgKr.png)
 
 ## Startup using docker
 
-```
-git clone https://github.com/PovilasID/Tapo-P110-Prometheus-Exporter.git
-cd Tapo-P110-Prometheus-Exporter
-docker build -t p110-exporter .
-```
-Create a tapo.yaml file from tapo.example.yaml with IP of your device 
-You can chec it in the tapo app -> the plug -> gear in top right -> "Device info": IP address OR in your router Wifi router DHCP leases) tip: make a lease static
+Create a ![docker-compose.yml](docker-compose.yml)
 
+```
+version: '3'
+
+services:
+  tapo-P110-exporter:
+    image: povilasid/p110-exporter
+    volumes:
+       - ./tapo.yaml:/app/tapo.yaml:ro
+    ports:
+      - 9333:9333
+    environment:
+      - TAPO_EMAIL=YOUR@EMAIL.COM
+      - TAPO_PASSWORD=CHANGE_ME
+      - PORT=9333 # optional
+```
+Create tapo.yaml and list P110 ips/names that expoerter will be able to reach them.
+You can check it in the tapo app -> the plug -> gear in top right -> "Device info": IP address OR in your router Wifi router DHCP leases) tip: make a lease static
+```
+devices:
+  study: "192.168.1.102"
+  living_room: "192.168.1.183"
+```
+Run the exporter
 ```
 docker compose up -d
 ```
-
-Add exporter to Prometheus by adding a job (IP of the docker not device) :
+Add exporter to Prometheus by adding a job (replace 127.0.0.1 your exporter machine) :
 
 ```
 scrape_configs:
@@ -28,9 +44,20 @@ scrape_configs:
       labels:
         machine: 'home'
 ```
-Import Grafa dashboard json (author did not not share his own, so I had to make my own) Energy monitoring-1664376150978.json file. 
-![Alt grafana dash](https://i.imgur.com/MXu5iQa.png)
+Import Grafa dashboard json Energy monitoring-1664376150978.json file. 
 
+### Building from srouce
+```
+git clone https://github.com/PovilasID/P110-Exporter.git
+cd TP110-Exporter
+docker build -t p110-exporter .
+```
+Create tapo.yaml as above
+Run the exporter
+```
+docker compose up -d
+```
+Add to Prometheus and import grafana
 ## Exposed Metrics
 
 ```
