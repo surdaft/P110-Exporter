@@ -76,7 +76,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1664434174061,
+  "iteration": 1664619471781,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -139,7 +139,7 @@
           "editorMode": "code",
           "exemplar": false,
           "expr": "tapo_p110_today_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}",
-          "legendFormat": "__auto",
+          "legendFormat": "{{machine}}",
           "range": true,
           "refId": "A"
         }
@@ -206,7 +206,7 @@
           "editorMode": "code",
           "exemplar": false,
           "expr": "tapo_p110_today_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}/1000*$eur_per_kWh",
-          "legendFormat": "__auto",
+          "legendFormat": "{{machine}}",
           "range": true,
           "refId": "A"
         }
@@ -271,7 +271,7 @@
           },
           "editorMode": "builder",
           "expr": "tapo_p110_device_count{job=\"$job\", machine=\"$machine\"}",
-          "legendFormat": "__auto",
+          "legendFormat": "{{machine}}",
           "range": true,
           "refId": "A"
         }
@@ -404,12 +404,12 @@
           },
           "editorMode": "code",
           "expr": "tapo_p110_month_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}",
-          "legendFormat": "__auto",
+          "legendFormat": "{{machine}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Monthly use wh",
+      "title": "Monthly use",
       "type": "stat"
     },
     {
@@ -471,7 +471,7 @@
           "editorMode": "code",
           "exemplar": false,
           "expr": "tapo_p110_month_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}/1000*$eur_per_kWh",
-          "legendFormat": "__auto",
+          "legendFormat": "{{machine}}",
           "range": true,
           "refId": "A"
         }
@@ -735,13 +735,13 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Energy monitoring",
   "uid": "c40p3MV4z",
-  "version": 5,
+  "version": 6,
   "weekStart": ""
 }
