@@ -6,7 +6,7 @@ Exports energy consumption data from Tapo P110 smart devices to Prometheus, allo
 
 ## Startup using docker
 
-Create a ![docker-compose.yml](docker-compose.yml)
+Create a [docker-compose.yml](docker-compose.yml)
 
 ```
 version: '3'
@@ -44,7 +44,7 @@ scrape_configs:
       labels:
         machine: 'home'
 ```
-Import Grafa dashboard json Energy monitoring-1664376150978.json file. 
+Import Grafa dashboard json Energy monitoring-1664376150978.json for latest update or just import from by pasting [id 17104](https://grafana.com/grafana/dashboards/17104-energy-monitoring/)
 
 ### Building from srouce
 ```
