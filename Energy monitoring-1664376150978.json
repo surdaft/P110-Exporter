@@ -76,7 +76,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1664619471781,
+  "iteration": 1667074071060,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -138,7 +138,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "tapo_p110_today_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}",
+          "expr": "sum by (room) (tapo_p110_today_energy_wh{job=\"$job\", machine=\"$machine\", room=~\"$rooms\"})",
           "legendFormat": "{{machine}}",
           "range": true,
           "refId": "A"
@@ -205,7 +205,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "tapo_p110_today_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}/1000*$eur_per_kWh",
+          "expr": "sum by (room)(tapo_p110_today_energy_wh{job=\"$job\", machine=\"$machine\", room=~\"$rooms\"}/1000*$eur_per_kWh)",
           "legendFormat": "{{machine}}",
           "range": true,
           "refId": "A"
@@ -336,7 +336,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "tapo_p110_power_consumption_w{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}",
+          "expr": "sum by (room)(tapo_p110_power_consumption_w{job=\"$job\", machine=\"$machine\", room=~\"$rooms\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -403,7 +403,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "tapo_p110_month_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}",
+          "expr": "sum by (room) (tapo_p110_month_energy_wh{job=\"$job\", machine=\"$machine\", room=~\"$rooms\"})",
           "legendFormat": "{{machine}}",
           "range": true,
           "refId": "A"
@@ -470,7 +470,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "tapo_p110_month_energy_wh{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}/1000*$eur_per_kWh",
+          "expr": "sum by (room)(tapo_p110_month_energy_wh{job=\"$job\", machine=\"$machine\", room=~\"$rooms\"}/1000*$eur_per_kWh)",
           "legendFormat": "{{machine}}",
           "range": true,
           "refId": "A"
@@ -627,7 +627,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "tapo_p110_power_consumption_w{job=\"$job\", machine=\"$machine\", room=\"$rooms\"}",
+          "expr": "tapo_p110_power_consumption_w{job=\"$job\", machine=\"$machine\", room=~\"$rooms\"}",
           "legendFormat": "{{room}}",
           "range": true,
           "refId": "A"
@@ -637,7 +637,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "5s",
+  "refresh": "30s",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [],
@@ -742,6 +742,6 @@
   "timezone": "",
   "title": "Energy monitoring",
   "uid": "c40p3MV4z",
-  "version": 6,
+  "version": 8,
   "weekStart": ""
 }
