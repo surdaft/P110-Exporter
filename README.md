@@ -1,6 +1,6 @@
 # Tapo P110 Prometheus Exporter
 
-Exports energy consumption data from Tapo P110 smart devices to Prometheus, allowing monitoring and visualisation in Grafana.
+Exports energy consumption data from [Tapo P110](https://amzn.to/3FsCgjn) smart devices to Prometheus, allowing monitoring and visualisation in Grafana.
 
 ![Example Grafana Dashboard](https://i.imgur.com/DxLQgKr.png)
 
