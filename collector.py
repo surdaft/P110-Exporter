@@ -94,9 +94,15 @@ class Collector:
             }
 
             logger.debug("connecting to device", extra=extra)
-            d = PyP110.P110(ip_address, email_address, password)
-            d.handshake()
-            d.login()
+            while True:
+                try:
+                    d = PyP110.P110(ip_address, email_address, password)
+                    d.handshake()
+                    d.login()
+                except :
+                    logger.error("failed to connect to device", extra=extra)
+                    continue
+                break
 
             logger.debug("successfully authenticated with device", extra=extra)
             return d
