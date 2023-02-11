@@ -8,7 +8,7 @@ Exports energy consumption data from [Tapo P110](https://amzn.to/3FsCgjn) smart 
 
 Create a [docker-compose.yml](docker-compose.yml)
 
-```
+```yml
 version: '3'
 
 services:
@@ -25,18 +25,18 @@ services:
 ```
 Create tapo.yaml and list P110 ips/names that expoerter will be able to reach them.
 You can check it in the tapo app -> the plug -> gear in top right -> "Device info": IP address OR in your router Wifi router DHCP leases) tip: make a lease static
-```
+```yml
 devices:
   study: "192.168.1.102"
   living_room: "192.168.1.183"
 ```
 Run the exporter
-```
+```console
 docker compose up -d
 ```
 Add exporter to Prometheus by adding a job (replace 127.0.0.1 your exporter machine) :
 
-```
+```yml
 scrape_configs:
   - job_name: 'tapo'
     static_configs:
@@ -47,14 +47,14 @@ scrape_configs:
 Import Grafa dashboard json Energy monitoring-1664376150978.json for latest update or just import from by pasting [id 17104](https://grafana.com/grafana/dashboards/17104-energy-monitoring/)
 
 ### Building from srouce
-```
+```console
 git clone https://github.com/PovilasID/P110-Exporter.git
 cd TP110-Exporter
 docker build -t p110-exporter .
 ```
 Create tapo.yaml as above
 Run the exporter
-```
+```console
 docker compose up -d
 ```
 Add to Prometheus and import grafana
