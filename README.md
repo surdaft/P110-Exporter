@@ -10,7 +10,7 @@ Exports energy consumption data from [Tapo P110](https://amzn.to/3FsCgjn) smart 
 
 1. Create a [docker-compose.yml](docker-compose.yml)
 
-1. Create [tapo.yml](#configuration) and list P110 ips/names, ensure that the exporter can reach them.
+1. Create [tapo.yaml](#configuration) and list P110 ips/names, ensure that the exporter can reach them.
 
     1. You can check it in the tapo app -> the plug -> gear in top right -> "Device info": IP address 
 
