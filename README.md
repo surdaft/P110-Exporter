@@ -119,7 +119,7 @@ tapo_p110_power_consumption_w{ip_address="192.168.1.183",room="living_room"} 121
 
 Communications are done directly with the P110 devices, therefore all IP addresses must be provided.
 
-```
+```yaml
 devices:
   study: "192.168.1.102"
   living_room: "192.168.1.183"
