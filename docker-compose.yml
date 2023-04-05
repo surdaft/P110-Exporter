@@ -16,4 +16,4 @@ services:
 
 configs:
   tapo:
-    file: ./tapo.yml
+    file: ./tapo.yaml
