@@ -1,6 +1,6 @@
-from threading import Event
 import signal
 
+from threading import Event
 from click import command, option
 from loguru import logger
 from prometheus_client import start_http_server
@@ -17,7 +17,7 @@ def graceful_shutdown(shutdown_event):
         })
 
         shutdown_event.set()
-    
+
     signal.signal(signal.SIGINT, _handle)
 
 
@@ -45,7 +45,7 @@ def start_monitoring(prometheus_port, collector):
 def run(tapo_email, tapo_password, config_file, prometheus_port):
     with open(config_file, "r") as cfg:
         config = safe_load(cfg)
-    
+
     logger.info("configuring metrics collector and prometheus http server")
     collector = Collector(config['devices'], tapo_email, tapo_password)
     start_monitoring(prometheus_port, collector)

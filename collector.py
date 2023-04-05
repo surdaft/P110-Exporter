@@ -63,6 +63,7 @@ def get_metrics():
 RED_SUCCESS = "SUCCESS"
 RED_FAILURE = "FAILURE"
 
+
 @contextmanager
 def time_observation(ip_address, room):
     caught = None
@@ -76,7 +77,11 @@ def time_observation(ip_address, room):
         caught = e
 
     duration = floor((time() - start) * 1000)
-    OBSERVATION_RED_METRICS.labels(ip_address=ip_address, room=room, success=status).observe(duration)
+    OBSERVATION_RED_METRICS.labels(
+        ip_address=ip_address,
+        room=room,
+        success=status
+    ).observe(duration)
 
     logger.debug("observation completed", extra={
         "ip": ip_address, "room": room, "duration_ms": duration,
@@ -100,7 +105,8 @@ class Collector:
                     d.handshake()
                     d.login()
                 except Exception as e:
-                    logger.error("failed to connect to device: "+str(e), extra=extra)
+                    errMsg = "failed to connect to device: " + str(e)
+                    logger.error(errMsg, extra=extra)
                     continue
                 break
 
@@ -120,7 +126,7 @@ class Collector:
             return device.getEnergyUsage()
 
     def collect(self):
-        logger.info("recieving prometheus metrics scrape: collecting observations")
+        logger.info("recieving prometheus metrics scrape")
 
         metrics = get_metrics()
         metrics[MetricType.DEVICE_COUNT].add_metric([], len(self.devices))
@@ -134,11 +140,16 @@ class Collector:
                 data = self.get_device_data(device, ip_addr, room)['result']
 
                 labels = [ip_addr, room]
-                metrics[MetricType.TODAY_RUNTIME].add_metric(labels, data['today_runtime'])
-                metrics[MetricType.MONTH_RUNTIME].add_metric(labels, data['month_runtime'])
-                metrics[MetricType.TODAY_ENERGY].add_metric(labels, data['today_energy'])
-                metrics[MetricType.MONTH_ENERGY].add_metric(labels, data['month_energy'])
-                metrics[MetricType.CURRENT_POWER].add_metric(labels, data['current_power'])
+                metrics[MetricType.TODAY_RUNTIME].add_metric(
+                    labels, data['today_runtime'])
+                metrics[MetricType.MONTH_RUNTIME].add_metric(
+                    labels, data['month_runtime'])
+                metrics[MetricType.TODAY_ENERGY].add_metric(
+                    labels, data['today_energy'])
+                metrics[MetricType.MONTH_ENERGY].add_metric(
+                    labels, data['month_energy'])
+                metrics[MetricType.CURRENT_POWER].add_metric(
+                    labels, data['current_power'])
             except Exception as e:
                 logger.exception("encountered exception during observation!")
 
