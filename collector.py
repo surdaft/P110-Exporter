@@ -74,7 +74,7 @@ def time_observation(ip_address, room):
     except Exception as e:
         status = RED_FAILURE
         caught = e
-    
+
     duration = floor((time() - start) * 1000)
     OBSERVATION_RED_METRICS.labels(ip_address=ip_address, room=room, success=status).observe(duration)
 
@@ -99,8 +99,8 @@ class Collector:
                     d = PyP110.P110(ip_address, email_address, password)
                     d.handshake()
                     d.login()
-                except :
-                    logger.error("failed to connect to device", extra=extra)
+                except Exception as e:
+                    logger.error("failed to connect to device: "+str(e), extra=extra)
                     continue
                 break
 
@@ -143,4 +143,4 @@ class Collector:
                 logger.exception("encountered exception during observation!")
 
         for m in metrics.values():
-            yield m        
+            yield m
