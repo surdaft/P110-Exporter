@@ -33,7 +33,7 @@ Exports energy consumption data from [Tapo P110](https://amzn.to/3FsCgjn) smart 
             machine: 'home'
     ```
 
-1. Import Grafana dashboard [json](Energy monitoring-1664376150978.json) or [id 17104](https://grafana.com/grafana/dashboards/17104-energy-monitoring/)
+1. Import Grafana dashboard [json](Energy%20monitoring-1664376150978.json) or [id 17104](https://grafana.com/grafana/dashboards/17104-energy-monitoring/)
 
 ---
 
