@@ -1,4 +1,5 @@
 import signal
+import os
 
 from threading import Event
 from click import command, option
@@ -43,6 +44,18 @@ def start_monitoring(prometheus_port, collector):
     '--prometheus-port', default=8080, help="port for prometheus metric exposition"
 )
 def run(tapo_email, tapo_password, config_file, prometheus_port):
+    if not os.path.exists(config_file):
+        logger.error("config file does not exist")
+        return
+
+    if tapo_email == None or len(tapo_email) == 0:
+        logger.error("tapo email is empty")
+        return
+
+    if tapo_password == None or len(tapo_password) == 0:
+        logger.error("tapo password is empty")
+        return
+
     with open(config_file, "r") as cfg:
         config = safe_load(cfg)
 
