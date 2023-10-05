@@ -1,13 +1,19 @@
-version: '3'
+version: '3.8'
 
 services:
   tapo-P110-exporter:
-    image: p110-exporter
-    volumes:
-       - ./tapo.yaml:/app/tapo.yaml:ro
+    image: povilasid/p110-exporter
+    configs:
+      - source: tapo
+        target: /app/tapo.yml
     ports:
       - 9333:9333
     environment:
+      # Note: These are your tplinkcloud.com credentials
       - TAPO_EMAIL=YOUR@EMAIL.COM
       - TAPO_PASSWORD=CHANGE_ME
-      - PORT=9333 # optional
+      - PORT=9333
+
+configs:
+  tapo:
+    file: ./tapo.yaml

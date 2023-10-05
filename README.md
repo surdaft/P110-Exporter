@@ -4,60 +4,55 @@ Exports energy consumption data from [Tapo P110](https://amzn.to/3FsCgjn) smart 
 
 ![Example Grafana Dashboard](https://i.imgur.com/DxLQgKr.png)
 
+---
+
 ## Startup using docker
 
-Create a [docker-compose.yml](docker-compose.yml)
+1. Create a [docker-compose.yml](docker-compose.yml)
 
-```yml
-version: '3'
+1. Create [tapo.yaml](#configuration) and list P110 ips/names, ensure that the exporter can reach them.
 
-services:
-  tapo-P110-exporter:
-    image: povilasid/p110-exporter
-    volumes:
-       - ./tapo.yaml:/app/tapo.yaml:ro
-    ports:
-      - 9333:9333
-    environment:
-      - TAPO_EMAIL=YOUR@EMAIL.COM
-      - TAPO_PASSWORD=CHANGE_ME
-      - PORT=9333 # optional
-```
-Create tapo.yaml and list P110 ips/names that expoerter will be able to reach them.
-You can check it in the tapo app -> the plug -> gear in top right -> "Device info": IP address OR in your router Wifi router DHCP leases) tip: make a lease static
-```yml
-devices:
-  study: "192.168.1.102"
-  living_room: "192.168.1.183"
-```
-Run the exporter
-```console
-docker compose up -d
-```
-Add exporter to Prometheus by adding a job (replace 127.0.0.1 your exporter machine) :
+    1. You can check it in the tapo app -> the plug -> gear in top right -> "Device info": IP address 
 
-```yml
-scrape_configs:
-  - job_name: 'tapo'
-    static_configs:
-    - targets: ['127.0.0.1:9333']
-      labels:
-        machine: 'home'
-```
-Import Grafa dashboard json Energy monitoring-1664376150978.json for latest update or just import from by pasting [id 17104](https://grafana.com/grafana/dashboards/17104-energy-monitoring/)
+    1. OR in your router Wifi router DHCP leases)
+    
+    > tip: Make the IP static, so it doesn't change when you move your plug.
 
-### Building from srouce
+1. Run the exporter
+    ```console
+    docker compose up -d
+    ```
+
+1. Add exporter to Prometheus by adding a job (replace 127.0.0.1 with your exporter IP, if not on the same host):
+    ```yml
+    scrape_configs:
+    - job_name: 'tapo'
+        static_configs:
+        - targets: ['127.0.0.1:9333']
+        labels:
+            machine: 'home'
+    ```
+
+1. Import Grafana dashboard [json](Energy%20monitoring-1664376150978.json) or [id 17104](https://grafana.com/grafana/dashboards/17104-energy-monitoring/)
+
+---
+
+### Building from source
+
+**Pre-requisits:**
+- Python 3
+- Python 3 pip
+- [Config file](#configuration)
+
 ```console
 git clone https://github.com/PovilasID/P110-Exporter.git
 cd TP110-Exporter
-docker build -t p110-exporter .
+pip3 install --no-cache-dir PyInstaller loguru prometheus_client PyP100 click pyyaml
+python3 main.py --tapo-email=xx --tapo-password=xx --config-file=xx --prometheus-port=xx
 ```
-Create tapo.yaml as above
-Run the exporter
-```console
-docker compose up -d
-```
-Add to Prometheus and import grafana
+
+---
+
 ## Exposed Metrics
 
 ```
@@ -124,7 +119,7 @@ tapo_p110_power_consumption_w{ip_address="192.168.1.183",room="living_room"} 121
 
 Communications are done directly with the P110 devices, therefore all IP addresses must be provided.
 
-```
+```yaml
 devices:
   study: "192.168.1.102"
   living_room: "192.168.1.183"
