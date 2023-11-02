@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from enum import Enum, auto
 from math import floor
-from time import time
+import time
 
 from loguru import logger
 from prometheus_client import Histogram
@@ -68,7 +68,7 @@ RED_FAILURE = "FAILURE"
 def time_observation(ip_address, room):
     caught = None
     status = RED_SUCCESS
-    start = time()
+    start = time.time()
 
     try:
         yield
@@ -76,7 +76,7 @@ def time_observation(ip_address, room):
         status = RED_FAILURE
         caught = e
 
-    duration = floor((time() - start) * 1000)
+    duration = floor((time.time() - start) * 1000)
     OBSERVATION_RED_METRICS.labels(
         ip_address=ip_address,
         room=room,
@@ -107,6 +107,8 @@ class Collector:
                 except Exception as e:
                     errMsg = "failed to connect to device: " + str(e)
                     logger.error(errMsg, extra=extra)
+
+                    time.sleep(5)
                     continue
                 break
 
